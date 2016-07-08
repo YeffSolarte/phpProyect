@@ -3,9 +3,15 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
+<<<<<<< HEAD
 -- Tiempo de generación: 09-07-2016 a las 00:57:50
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.5.37
+=======
+-- Tiempo de generación: 24-06-2016 a las 03:06:22
+-- Versión del servidor: 10.1.9-MariaDB
+-- Versión de PHP: 5.6.15
+>>>>>>> 89011b1cdfd6c8e074c5c680536886f08e20d12c
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -37,6 +43,7 @@ CREATE TABLE `articulos` (
   `des_art` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+<<<<<<< HEAD
 --
 -- Volcado de datos para la tabla `articulos`
 --
@@ -47,6 +54,8 @@ INSERT INTO `articulos` (`id_art`, `cod_art`, `nom_art`, `pre_com`, `pre_ven`, `
 (3, '3', 'Yeff Articulo', 5, 1000, NULL, 10, '0'),
 (4, '4', 'Yeff Articulo 2', 5, 1000, NULL, 10, '0');
 
+=======
+>>>>>>> 89011b1cdfd6c8e074c5c680536886f08e20d12c
 -- --------------------------------------------------------
 
 --
@@ -200,7 +209,11 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
+<<<<<<< HEAD
   MODIFY `id_art` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+=======
+  MODIFY `id_art` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> 89011b1cdfd6c8e074c5c680536886f08e20d12c
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
