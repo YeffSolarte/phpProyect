@@ -1,0 +1,36 @@
+body {
+  font-size: 12px;
+}
+.navHome {
+  width: 100%;
+  display: block;
+}
+.navHome > nav {
+  width: 100%;
+  background: rgba(25,36,47,0.5);
+}
+.navHome > nav > ul {
+  width: 100%;
+  padding: 0;
+  display: table;
+}
+.navHome > nav > ul > li {
+  display: table-cell;
+  border-right: 2px solid #fff;
+  height: 3em;
+  line-height: 3em;
+  text-align: center;
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+}
+.navHome > nav > ul > li:hover {
+  background: #19242f;
+}
+.navHome > nav > ul > li > a {
+  text-decoration: none;
+  color: #fff;
+  padding: 1em 2em;
+  font-size: 1.3em;
+}
