@@ -1,0 +1,81 @@
+<div class="col-xs-12">
+    <div class="col-xs-6 containerViews">
+        <form name="itCtrl.itemsForm"  autocomplete="off">
+            <div class="col-xs-4 listLeft">
+                <ul >
+                    <li
+                            ng-repeat="item in itCtrl.items"
+                            ng-class="{ 'itemSelected' : itCtrl.newItem.id_art === item.id_art}"
+                            ng-click="itCtrl.selectItem(item)">
+                        <div>
+                            <h6>{{item.cod_art}}</h6>
+                            <span>{{item.nom_art}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-8">
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Código"
+                            ng-blur="itCtrl.getItemByCode(itCtrl.newItem.cod_art)"
+                            ng-model="itCtrl.newItem.cod_art"
+                            ng-disabled="itCtrl.newItem.id_art"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Nombre"
+                            ng-model="itCtrl.newItem.nom_art"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Precio de Compra"
+                            ng-model="itCtrl.newItem.pre_com"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Precio de Venta"
+                            ng-model="itCtrl.newItem.pre_ven"
+                            required>
+                </div>
+                <div class="form-group">
+                    <textarea
+                            class="form-control"
+                            placeholder="Descripción"
+                            ng-model="itCtrl.newItem.des_art"
+                            required>
+                    </textarea>
+                </div>
+                <div class="text-center">
+                    <button type="button" ng-click="itCtrl.clearForm()" class="btn btn-default">Nuevo</button>
+                    <button type="button" ng-click="itCtrl.submitItem()" class="btn btn-default">Guardar</button>
+                    <button type="button" class="btn btn-default">Eliminar</button>
+                </div>
+            </div>
+        </form>
+
+        <!--<table class="table">-->
+            <!--<tr>-->
+                <!--<td>{{Correo}}</td>-->
+                <!--<td>{{Nombre}}</td>-->
+                <!--<td>{{Apellido}}</td>-->
+                <!--<td>{{Sexo}}</td>-->
+                <!--<td>{{Sueldo}}</td>-->
+                <!--<td>{{Profesion_id}}</td>-->
+                <!--<td>{{FechaNacimiento}}</td>-->
+                <!--<td>{{FechaRegistro}}</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    </div>
+</div>

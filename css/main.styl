@@ -10,6 +10,7 @@ body
       width 100%
       padding 0
       display table
+      margin 0
       & > li
         display table-cell
         border-right 2px solid white
@@ -22,8 +23,47 @@ body
         transition: all 300ms ease-out;
         &:hover
           background rgb(25,36,47)
+        &:last-child
+          border-right none
         & > a
           text-decoration none
           color white
           padding 1em 2em
           font-size 1.3em
+
+
+.onMenuSection
+  width 100%
+  height calc(100vh - 3.1em)
+
+.containerInputsGeneral
+  width 100%
+  display inline-block
+
+.containerViews
+  margin 5vh auto 0 auto
+  float initial
+  font-size 1em
+  input, select, textarea
+    font-size 1em
+
+.listLeft
+  border 1px solid grey
+  height 50vh
+  overflow-x hidden
+  overflow-y auto
+  & > ul
+    width 100%
+    padding 0
+    & > li
+      list-style none
+      width 100%
+      border-bottom 1px solid darkgrey
+      & > div
+        & > span
+          margin-left .5em
+      &:hover
+        background darkgrey
+.itemSelected
+  background darkgrey
+

@@ -13,6 +13,7 @@ body {
   width: 100%;
   padding: 0;
   display: table;
+  margin: 0;
 }
 .navHome > nav > ul > li {
   display: table-cell;
@@ -28,9 +29,54 @@ body {
 .navHome > nav > ul > li:hover {
   background: #19242f;
 }
+.navHome > nav > ul > li:last-child {
+  border-right: none;
+}
 .navHome > nav > ul > li > a {
   text-decoration: none;
   color: #fff;
   padding: 1em 2em;
   font-size: 1.3em;
+}
+.onMenuSection {
+  width: 100%;
+  height: calc(100vh - 3.1em);
+}
+.containerInputsGeneral {
+  width: 100%;
+  display: inline-block;
+}
+.containerViews {
+  margin: 5vh auto 0 auto;
+  float: initial;
+  font-size: 1em;
+}
+.containerViews input,
+.containerViews select,
+.containerViews textarea {
+  font-size: 1em;
+}
+.listLeft {
+  border: 1px solid #808080;
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.listLeft > ul {
+  width: 100%;
+  padding: 0;
+}
+.listLeft > ul > li {
+  list-style: none;
+  width: 100%;
+  border-bottom: 1px solid #a9a9a9;
+}
+.listLeft > ul > li > div > span {
+  margin-left: 0.5em;
+}
+.listLeft > ul > li:hover {
+  background: #a9a9a9;
+}
+.itemSelected {
+  background: #a9a9a9;
 }
