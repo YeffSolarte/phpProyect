@@ -1,8 +1,9 @@
 <?php
 // Cargamos Vendor
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header('Access-Control-Allow-Credentials: true');  
+header("Access-Control-Allow-Headers: Authorizations, Content-Type");
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -19,7 +20,7 @@ $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
 
 switch ($method) {        
     case 'PUT':
-        $actionget = isset($_GET['id_art']) ? true : null;
+        $actionget = isset($_GET['id_pro']) ? true : null;
         if($actionget){
             header('Content-Type: application/json');
             $data = json_decode(utf8_encode(file_get_contents("php://input")), true);
@@ -27,30 +28,26 @@ switch ($method) {
         }        
         break;
     case 'POST':       
-        header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
         $data = json_decode(utf8_encode(file_get_contents("php://input")), true);
         print_r(json_encode(registrar($fluent, $data)));
         break;
     case 'GET': 
         header('Content-Type: application/json');
-        $actionget = isset($_GET['id_art']) ? true : null;
+        $actionget = isset($_GET['id_pro']) ? true : null;
         if($actionget){
-            print_r(json_encode(obtener($fluent, $_GET['id_art']))); 
+            print_r(json_encode(obtener($fluent, $_GET['id_pro']))); 
         }
         else {
             print_r(json_encode(listar($fluent)));
         }
         break;   
     case 'DELETE':
-        $actionget = isset($_GET['id_art']) ? true : null;
+        $actionget = isset($_GET['id_pro']) ? true : null;
         if($actionget){
             header('Content-Type: application/json');
-            print_r(json_encode(eliminar($fluent,$_GET['id_art'])));
+            print_r(json_encode(eliminar($fluent,$_GET['id_pro'])));
         }        
-        break;
-    case 'OPTIONS':
-        echo "OPTIONS";    
         break;
     default:
         echo "asdasd"; 
@@ -61,21 +58,21 @@ switch ($method) {
 function listar($fluent)
 {
     return $fluent
-         ->from('articulos')
+         ->from('proveedores')
          ->fetchAll();
 }
 
-function obtener($fluent, $id_art)
+function obtener($fluent, $id_pro)
 {
-    return $fluent->from('articulos')
-                  ->where('id_art',$id_art)
+    return $fluent->from('proveedores')
+                  ->where('id_pro',$id_pro)
                               ->fetch();
 }
 
 function eliminar($fluent, $id)
 {
-    $fluent->deleteFrom('articulos')
-        ->where('id_art', $id)
+    $fluent->deleteFrom('proveedores')
+        ->where('id_pro', $id)
              ->execute();
     
     return 'Eliminado Correctamente';
@@ -83,22 +80,22 @@ function eliminar($fluent, $id)
 
 function registrar($fluent, $data)
 {
-    $fluent->insertInto('articulos', $data)
+    $fluent->insertInto('proveedores', $data)
              ->execute();
     
-    return $fluent->from('articulos')
-        ->where('cod_art',$data['cod_art'])
+    return $fluent->from('proveedores')
+        ->where('doc_pro',$data['doc_pro'])
             ->fetch();;
 }
 
 function modificar($fluent, $data)
 {
-    $fluent->update('articulos' )
-        ->set($data)->where('id_art', $data['id_art'])
+    $fluent->update('proveedores' )
+        ->set($data)->where('id_pro', $data['id_pro'])
             ->execute();
     
-    return $fluent->from('articulos')
-                  ->where('id_art',$data['id_art'])
+    return $fluent->from('proveedores')
+                  ->where('id_pro',$data['id_pro'])
                               ->fetch();;
 }
 

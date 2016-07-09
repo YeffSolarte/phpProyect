@@ -1,0 +1,80 @@
+<div class="col-xs-12">
+    <div class="col-xs-6 containerViews">
+        <form name="prCtrl.providersForm"  autocomplete="off">
+            <div class="col-xs-4 listLeft">
+                <ul >
+                    <li
+                            ng-repeat="pro in prCtrl.providers"
+                            ng-class="{ 'itemSelected' : prCtrl.newProvider.id_pro === pro.id_pro}"
+                            ng-click="prCtrl.selectProvider(pro)">
+                        <div>
+                            <h6>{{pro.doc_pro}}</h6>
+                            <span>{{pro.nom_pro}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-8">
+
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Nombre"
+                            ng-model="prCtrl.newProvider.nom_pro"
+                            required>
+                </div>
+                <div class="form-group">
+                    <select
+                            class="form-control"
+                            ng-model="prCtrl.newProvider.tip_doc"
+                            required>
+                        <option value="CC">Cedula de Ciudadania</option>
+                        <option value="CE">Cedula de Extrangeria</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="TE">Tarjeta de Extrangeria</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            ng-blur="prCtrl.getProviderByDocNum(prCtrl.newProvider.doc_pro)"
+                            ng-disabled="prCtrl.newProvider.id_pro"
+                            placeholder="No. de Documento"
+                            ng-model="prCtrl.newProvider.doc_pro"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Direccion"
+                            ng-model="prCtrl.newProvider.dir_pro"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Telefono"
+                            ng-model="prCtrl.newProvider.tel_pro"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Ciudad"
+                            ng-model="prCtrl.newProvider.ciu_pro"
+                            required>
+                </div>
+                <div class="text-center">
+                    <button type="button" ng-click="prCtrl.clearForm()" class="btn btn-info">Nuevo</button>
+                    <button type="button" ng-click="prCtrl.submitProvider()" class="btn btn-success">Guardar</button>
+                    <button type="button" ng-click="prCtrl.deleteProvider()" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

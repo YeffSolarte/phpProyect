@@ -1,21 +1,21 @@
 (function(){
     'use strict';
-    angular.module('items')
-        .factory('itemsFactory',itemsFactory);
+    angular.module('providers')
+        .factory('providersFactory',providersFactory);
 
-    itemsFactory.$inject = ['$q','baseFactory','$http'];
+    providersFactory.$inject = ['$q','baseFactory','$http'];
 
-    function itemsFactory($q,baseFactory,$http){
+    function providersFactory($q,baseFactory,$http){
         return {
-            getAllItems : getAllItems,
-            postItem : postItem,
-            putItem : putItem,
-            deleteItem: deleteItem
+            getAllProviders : getAllProviders,
+            postProvider : postProvider,
+            putProvider : putProvider,
+            deleteProvider: deleteProvider
         };
 
-        function getAllItems(){
+        function getAllProviders(){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php';
+                var url = 'proveedores.php';
                 baseFactory(url).get().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
@@ -24,9 +24,9 @@
             });
         }
 
-        function postItem(data){
+        function postProvider(data){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php';
+                var url = 'proveedores.php';
                 baseFactory(url, data).post().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
@@ -35,9 +35,9 @@
             });
         }
 
-        function putItem(data){
+        function putProvider(data){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php?id_art='+data.id_art;
+                var url = 'proveedores.php?id_pro='+data.id_pro;
                 baseFactory(url, data).put().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
@@ -46,9 +46,9 @@
             });
         }
 
-        function deleteItem(id){
+        function deleteProvider(id){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php?id_art='+id;
+                var url = 'proveedores.php?id_pro='+id;
                 baseFactory(url).delete().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {

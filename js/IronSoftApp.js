@@ -3,7 +3,10 @@
     angular.module('ironSoftApp', [
         'ui.router',
         'employees',
-        'items'
+        'items',
+        'providers',
+        'clients',
+        'inventory'
     ])
         .constant('ngAuthSettings',{apiServiceBaseUri: 'http://localhost:8080/phpProyect/api/'});
 })();

@@ -80,3 +80,6 @@ body {
 .itemSelected {
   background: #a9a9a9;
 }
+.existMin {
+  border: 1px solid #ff3b49;
+}

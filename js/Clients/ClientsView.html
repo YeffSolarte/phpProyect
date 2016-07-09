@@ -1,0 +1,80 @@
+<div class="col-xs-12">
+    <div class="col-xs-6 containerViews">
+        <form name="clCtrl.clientsForm"  autocomplete="off">
+            <div class="col-xs-4 listLeft">
+                <ul >
+                    <li
+                            ng-repeat="cli in clCtrl.clients"
+                            ng-class="{ 'itemSelected' : clCtrl.newClient.id_cli === cli.id_cli}"
+                            ng-click="clCtrl.selectClient(cli)">
+                        <div>
+                            <h6>{{cli.doc_cli}}</h6>
+                            <span>{{cli.nom_cli}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-8">
+
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Nombre"
+                            ng-model="clCtrl.newClient.nom_cli"
+                            required>
+                </div>
+                <div class="form-group">
+                    <select
+                            class="form-control"
+                            ng-model="clCtrl.newClient.tip_doc"
+                            required>
+                        <option value="CC">Cedula de Ciudadania</option>
+                        <option value="CE">Cedula de Extrangeria</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="TE">Tarjeta de Extrangeria</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            ng-blur="clCtrl.getProviderByDocNum(clCtrl.newClient.doc_cli)"
+                            ng-disabled="clCtrl.newClient.id_cli"
+                            placeholder="No. de Documento"
+                            ng-model="clCtrl.newClient.doc_cli"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Direccion"
+                            ng-model="clCtrl.newClient.dir_cli"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Telefono"
+                            ng-model="clCtrl.newClient.tel_cli"
+                            required>
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Ciudad"
+                            ng-model="clCtrl.newClient.ciu_cli"
+                            required>
+                </div>
+                <div class="text-center">
+                    <button type="button" ng-click="clCtrl.clearForm()" class="btn btn-info">Nuevo</button>
+                    <button type="button" ng-click="clCtrl.submitClient()" class="btn btn-success">Guardar</button>
+                    <button type="button" ng-click="clCtrl.deleteClient()" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -19,7 +19,7 @@ $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
 
 switch ($method) {        
     case 'PUT':
-        $actionget = isset($_GET['id_art']) ? true : null;
+        $actionget = isset($_GET['id_cli']) ? true : null;
         if($actionget){
             header('Content-Type: application/json');
             $data = json_decode(utf8_encode(file_get_contents("php://input")), true);
@@ -34,23 +34,20 @@ switch ($method) {
         break;
     case 'GET': 
         header('Content-Type: application/json');
-        $actionget = isset($_GET['id_art']) ? true : null;
+        $actionget = isset($_GET['id_cli']) ? true : null;
         if($actionget){
-            print_r(json_encode(obtener($fluent, $_GET['id_art']))); 
+            print_r(json_encode(obtener($fluent, $_GET['id_cli']))); 
         }
         else {
             print_r(json_encode(listar($fluent)));
         }
         break;   
     case 'DELETE':
-        $actionget = isset($_GET['id_art']) ? true : null;
+        $actionget = isset($_GET['id_cli']) ? true : null;
         if($actionget){
             header('Content-Type: application/json');
-            print_r(json_encode(eliminar($fluent,$_GET['id_art'])));
+            print_r(json_encode(eliminar($fluent,$_GET['id_cli'])));
         }        
-        break;
-    case 'OPTIONS':
-        echo "OPTIONS";    
         break;
     default:
         echo "asdasd"; 
@@ -61,21 +58,21 @@ switch ($method) {
 function listar($fluent)
 {
     return $fluent
-         ->from('articulos')
+         ->from('clientes')
          ->fetchAll();
 }
 
-function obtener($fluent, $id_art)
+function obtener($fluent, $id_cli)
 {
-    return $fluent->from('articulos')
-                  ->where('id_art',$id_art)
+    return $fluent->from('clientes')
+                  ->where('id_cli',$id_cli)
                               ->fetch();
 }
 
 function eliminar($fluent, $id)
 {
-    $fluent->deleteFrom('articulos')
-        ->where('id_art', $id)
+    $fluent->deleteFrom('clientes')
+        ->where('id_cli', $id)
              ->execute();
     
     return 'Eliminado Correctamente';
@@ -83,22 +80,22 @@ function eliminar($fluent, $id)
 
 function registrar($fluent, $data)
 {
-    $fluent->insertInto('articulos', $data)
+    $fluent->insertInto('clientes', $data)
              ->execute();
     
-    return $fluent->from('articulos')
-        ->where('cod_art',$data['cod_art'])
+    return $fluent->from('clientes')
+        ->where('doc_cli',$data['doc_cli'])
             ->fetch();;
 }
 
 function modificar($fluent, $data)
 {
-    $fluent->update('articulos' )
-        ->set($data)->where('id_art', $data['id_art'])
+    $fluent->update('clientes' )
+        ->set($data)->where('id_cli', $data['id_cli'])
             ->execute();
     
-    return $fluent->from('articulos')
-                  ->where('id_art',$data['id_art'])
+    return $fluent->from('clientes')
+                  ->where('id_cli',$data['id_cli'])
                               ->fetch();;
 }
 

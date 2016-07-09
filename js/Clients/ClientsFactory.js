@@ -1,21 +1,21 @@
 (function(){
     'use strict';
-    angular.module('items')
-        .factory('itemsFactory',itemsFactory);
+    angular.module('clients')
+        .factory('clientsFactory',clientsFactory);
 
-    itemsFactory.$inject = ['$q','baseFactory','$http'];
+    clientsFactory.$inject = ['$q','baseFactory','$http'];
 
-    function itemsFactory($q,baseFactory,$http){
+    function clientsFactory($q,baseFactory,$http){
         return {
-            getAllItems : getAllItems,
-            postItem : postItem,
-            putItem : putItem,
-            deleteItem: deleteItem
+            getAllClients : getAllClients,
+            postClient : postClient,
+            putClient : putClient,
+            deleteClient: deleteClient
         };
 
-        function getAllItems(){
+        function getAllClients(){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php';
+                var url = 'clientes.php';
                 baseFactory(url).get().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
@@ -24,9 +24,9 @@
             });
         }
 
-        function postItem(data){
+        function postClient(data){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php';
+                var url = 'clientes.php';
                 baseFactory(url, data).post().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
@@ -35,9 +35,9 @@
             });
         }
 
-        function putItem(data){
+        function putClient(data){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php?id_art='+data.id_art;
+                var url = 'clientes.php?id_cli='+data.id_cli;
                 baseFactory(url, data).put().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
@@ -46,9 +46,9 @@
             });
         }
 
-        function deleteItem(id){
+        function deleteClient(id){
             return $q(function (resolve, reject) {
-                var url = 'articulos.php?id_art='+id;
+                var url = 'clientes.php?id_cli='+id;
                 baseFactory(url).delete().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {

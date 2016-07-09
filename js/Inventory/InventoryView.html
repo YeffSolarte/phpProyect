@@ -1,0 +1,27 @@
+<div class="col-xs-12">
+    <div class="col-xs-10 containerViews">
+        <table class="table">
+            <h3>Articulos en Almacen</h3>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Existencias</th>
+                    <th>Precio de Compra</th>
+                    <th>Precio de Venta</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in inCtrl.items">
+                    <th scope="row">{{item.cod_art}}</th>
+                    <td>{{item.nom_art}}</td>
+                    <td ng-class="{ 'existMin' : inCtrl.convertToInt(item.exi_art) < 5 }">{{item.exi_art}}</td>
+                    <td>{{item.pre_com}}</td>
+                    <td>{{item.pre_ven}}</td>
+                    <td>{{item.des_art}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

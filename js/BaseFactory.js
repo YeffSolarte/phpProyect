@@ -30,7 +30,10 @@
                         $http({
                             method: 'POST',
                             url: ngAuthSettings.apiServiceBaseUri + apiUrl,
-                            data : data
+                            data : data,
+                            headers : {
+                                'Content-Type': 'application/json'
+                            }
                         }).then(function (response) {
                             resolve(response);
                         }, function (reason) {
@@ -43,6 +46,9 @@
                         $http({
                             method: 'PUT',
                             url: ngAuthSettings.apiServiceBaseUri + apiUrl,
+                            headers : {
+                                'Content-Type': 'application/json'
+                            },
                             data : data
                         }).then(function (response) {
                             resolve(response);
@@ -55,6 +61,9 @@
                     return $q(function (resolve, reject) {
                         $http({
                             method: 'DELETE',
+                            headers : {
+                                'Content-Type': 'application/json'
+                            },
                             url: ngAuthSettings.apiServiceBaseUri + apiUrl
                         }).then(function (response) {
                             resolve(response);
