@@ -83,3 +83,26 @@ body {
 .existMin {
   border: 1px solid #ff3b49;
 }
+.tableFact {
+  position: relative;
+}
+.tableFact > .tableFact-grid {
+  height: 50vh;
+}
+.tableFact > .buttonsGrid {
+  width: 6%;
+  position: absolute;
+  top: -45px;
+  right: -7%;
+}
+.tableFact > .buttonsGrid > button {
+  background: transparent;
+  border: none;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.containerTable {
+  padding: 0;
+  overflow: hidden;
+  float: initial;
+}

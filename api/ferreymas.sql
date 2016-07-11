@@ -3,15 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
-<<<<<<< HEAD
--- Tiempo de generación: 09-07-2016 a las 00:57:50
+-- Tiempo de generación: 11-07-2016 a las 05:11:37
 -- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.5.37
-=======
--- Tiempo de generación: 24-06-2016 a las 03:06:22
--- Versión del servidor: 10.1.9-MariaDB
--- Versión de PHP: 5.6.15
->>>>>>> 89011b1cdfd6c8e074c5c680536886f08e20d12c
+-- Versión de PHP: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -43,19 +37,14 @@ CREATE TABLE `articulos` (
   `des_art` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-<<<<<<< HEAD
 --
 -- Volcado de datos para la tabla `articulos`
 --
 
 INSERT INTO `articulos` (`id_art`, `cod_art`, `nom_art`, `pre_com`, `pre_ven`, `img_art`, `exi_art`, `des_art`) VALUES
 (1, '1', 'lavaloza', 2000, 10000, NULL, 10, '0'),
-(2, '2', 'arroz', 1500, 5000, NULL, 10, '0'),
-(3, '3', 'Yeff Articulo', 5, 1000, NULL, 10, '0'),
-(4, '4', 'Yeff Articulo 2', 5, 1000, NULL, 10, '0');
+(3, '3', 'Celular', 200, 20000, NULL, 0, 'Barato oiga, pues pues pues');
 
-=======
->>>>>>> 89011b1cdfd6c8e074c5c680536886f08e20d12c
 -- --------------------------------------------------------
 
 --
@@ -72,6 +61,13 @@ CREATE TABLE `clientes` (
   `ciu_cli` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_cli`, `tip_doc`, `doc_cli`, `nom_cli`, `dir_cli`, `tel_cli`, `ciu_cli`) VALUES
+(1, 'CC', 1144077005, 'Yeff Client', 'asdasdas', 12321321, 'Cali');
+
 -- --------------------------------------------------------
 
 --
@@ -83,6 +79,14 @@ CREATE TABLE `consecutivos` (
   `consecutivo` int(11) NOT NULL,
   `fec_act` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `consecutivos`
+--
+
+INSERT INTO `consecutivos` (`id_tip`, `consecutivo`, `fec_act`) VALUES
+(1, 0, '2016-07-09'),
+(2, 0, '2016-07-09');
 
 -- --------------------------------------------------------
 
@@ -113,6 +117,13 @@ CREATE TABLE `empleados` (
   `cargo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `empleados`
+--
+
+INSERT INTO `empleados` (`id_emp`, `tip_doc`, `doc_emp`, `cod_emp`, `nom_emp`, `cargo`) VALUES
+(1, 'CC', 1144077005, '1', 'Yeff Solarte', 'CEO');
+
 -- --------------------------------------------------------
 
 --
@@ -123,8 +134,8 @@ CREATE TABLE `factura` (
   `id_fac` int(11) NOT NULL,
   `id_tip` int(11) NOT NULL,
   `consecutivo` int(11) NOT NULL,
-  `id_cli` int(11) NOT NULL,
-  `id_pro` int(11) NOT NULL,
+  `id_cli` int(11) DEFAULT NULL,
+  `id_pro` int(11) DEFAULT NULL,
   `id_emp` int(11) NOT NULL,
   `tot_des` float DEFAULT NULL,
   `tot_fac` float NOT NULL,
@@ -146,6 +157,14 @@ CREATE TABLE `proveedores` (
   `tel_pro` int(15) NOT NULL,
   `ciu_pro` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+
+INSERT INTO `proveedores` (`id_pro`, `tip_doc`, `doc_pro`, `nom_pro`, `dir_pro`, `tel_pro`, `ciu_pro`) VALUES
+(1, 'CC', 112312341, 'Arlexis Pro', 'asdas', 319123012, 'Cali'),
+(3, 'CC', 1144077005, 'Yefferson Solarte', 'asdasdasd', 123123213, 'Cali');
 
 --
 -- Índices para tablas volcadas
@@ -209,21 +228,17 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-<<<<<<< HEAD
-  MODIFY `id_art` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-=======
-  MODIFY `id_art` int(11) NOT NULL AUTO_INCREMENT;
->>>>>>> 89011b1cdfd6c8e074c5c680536886f08e20d12c
+  MODIFY `id_art` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cli` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id_emp` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_emp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
@@ -233,7 +248,7 @@ ALTER TABLE `factura`
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id_pro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --

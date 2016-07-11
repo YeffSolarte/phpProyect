@@ -1,20 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Formulario Empleado</title>
-	<link rel="stylesheet" href="../css/empleados.css">
-</head>
-<body>
-	<form action="../php/registrarEmpleado.php"method="post">
-		<input type="hidden"name="id_emp"placeholder=""><br><br>
-		<input type="text"name="tip_doc"placeholder="tipo documento"><br><br>
-		<input type="text"name="doc_emp"placeholder="numero documento"><br><br>
-		<input type="text"name="cod_emp"placeholder="codigo empleado"><br><br>
-		<input type="text"name="nom_emp"placeholder="nombre empleado"><br><br>
-		<input type="text"name="cargo"placeholder="cargo del empleado"><br><br>
-		<input type="submit"value="Registrar">
-		
-	</form>
-</body>
-</html>
+<div class="col-xs-12">
+	<div class="col-xs-6 containerViews">
+		<div class="text-center">
+			<h4>EMPLEADOS</h4>
+		</div>
+		<form name="emCtrl.employeesForm"  autocomplete="off">
+			<div class="col-xs-4 listLeft">
+				<ul >
+					<li
+							ng-repeat="emp in emCtrl.employees"
+							ng-class="{ 'itemSelected' : emCtrl.newEmployee.id_emp === emp.id_emp}"
+							ng-click="emCtrl.selectEmployee(emp)">
+						<div>
+							<h6>{{emp.doc_emp}}</h6>
+							<span>{{emp.nom_emp}}</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-8">
+				<div class="form-group">
+					<input
+							type="text"
+							class="form-control"
+							placeholder="Código"
+							ng-model="emCtrl.newEmployee.cod_emp"
+							required>
+				</div>
+				<div class="form-group">
+					<input
+							type="text"
+							class="form-control"
+							placeholder="Nombre"
+							ng-model="emCtrl.newEmployee.nom_emp"
+							required>
+				</div>
+				<div class="form-group">
+					<select
+							class="form-control"
+							ng-model="emCtrl.newEmployee.tip_doc"
+							required>
+						<option value="CC">Cedula de Ciudadania</option>
+						<option value="CE">Cedula de Extrangeria</option>
+						<option value="TI">Tarjeta de Identidad</option>
+						<option value="TE">Tarjeta de Extrangeria</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<input
+							type="text"
+							class="form-control"
+							ng-blur="emCtrl.getEmployeeByDocNum(emCtrl.newEmployee.doc_emp)"
+							ng-disabled="emCtrl.newEmployee.id_emp"
+							placeholder="No. de Documento"
+							ng-model="emCtrl.newEmployee.doc_emp"
+							required>
+				</div>
+				<div class="form-group">
+					<input
+							type="text"
+							class="form-control"
+							placeholder="Cargo"
+							ng-model="emCtrl.newEmployee.cargo"
+							required>
+				</div>
+				<div class="text-center">
+					<button type="button" ng-click="emCtrl.clearForm()" class="btn btn-info">Nuevo</button>
+					<button type="button" ng-click="emCtrl.submitEmployee()" class="btn btn-success">Guardar</button>
+					<button type="button" ng-click="emCtrl.deleteEmployee()" class="btn btn-danger">Eliminar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
