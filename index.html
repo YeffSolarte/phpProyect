@@ -2,8 +2,11 @@
 <html ng-app="ironSoftApp">
 	<head>
 		<title>IRON SOFT</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="css/ui-grid.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+        <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
 	</head>
 	<body ng-controller="MainController as mCtrl">
         <div ui-view></div>
@@ -11,6 +14,7 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>-->
         <script src="lib/angular.js"></script>
         <script src="lib/angular-ui-router.js"></script>
+        <script src="lib/ui-grid.min.js"></script>
         <script src="js/IronSoftApp.js"></script>
         <script src="js/MainController.js"></script>
         <script src="js/routeStates.js"></script>
@@ -35,5 +39,9 @@
         <script src="js/Inventory/InventoryConfig.js"></script>
         <script src="js/Inventory/InventoryController.js"></script>
         <script src="js/Inventory/InventoryFactory.js"></script>
+        <script src="js/Purchase/PurchaseApp.js"></script>
+        <script src="js/Purchase/PurchaseConfig.js"></script>
+        <script src="js/Purchase/PurchaseController.js"></script>
+        <script src="js/Purchase/PurchaseFactory.js"></script>
 	</body>
 </html>

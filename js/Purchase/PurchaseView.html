@@ -1,0 +1,114 @@
+<div class="col-xs-12">
+    <div class="col-xs-10 containerViews">
+        <div class="text-center">
+            <h4>COMPRAS</h4>
+        </div>
+        <form name="psCtrl.purchaseForm"  autocomplete="off">
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+
+                    <div class="form-group">
+                        <label for="consecutive">Consecutivo</label>
+                        <input
+                                type="text"
+                                id="consecutive"
+                                class="form-control"
+                                ng-disabled="psCtrl.newPurchase.id_fac"
+                                ng-model="psCtrl.newPurchase.consecutivo"
+                                required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_emp">Empleado</label>
+                        <select
+                                class="form-control"
+                                id="id_emp"
+                                ng-model="psCtrl.newPurchase.id_emp"
+                                ng-options="emp.id_emp as emp.nom_emp for emp in psCtrl.employees"
+                                required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Fecha Factura</label>
+                        <input
+                                type="date"
+                                id="date"
+                                class="form-control"
+                                ng-model="psCtrl.newPurchase.fec_fac"
+                                disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_pro">Proveedor</label>
+                        <select
+                                class="form-control"
+                                id="id_pro"
+                                ng-model="psCtrl.newPurchase.id_pro"
+                                ng-options="pro.id_pro as pro.nom_pro for pro in psCtrl.providers"
+                                required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tot_des">Descuento</label>
+                        <input
+                                type="number"
+                                id="tot_des"
+                                class="form-control"
+                                ng-model="psCtrl.newPurchase.tot_des"
+                                ng-blur=""
+                                required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tot_fac">Total</label>
+                        <input
+                                type="text"
+                                id="tot_fac"
+                                class="form-control"
+                                ng-model="psCtrl.newPurchase.tot_fac"
+                                disabled>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="containerTable col-xs-12">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="items">Articulo</label>
+                                <select
+                                        id="items"
+                                        class="form-control"
+                                        ng-options="art as art.nom_art for art in psCtrl.items"
+                                        ng-model="psCtrl.newPurchase.item">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="quantity">Cantidad</label>
+                                <input
+                                        type="number"
+                                        id="quantity"
+                                        class="form-control"
+                                        ng-model="psCtrl.newPurchase.quantity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tableFact">
+                        <div class="tableFact-grid" ui-grid="gridOptions" ui-grid-selection ui-grid-cellnav ui-grid-resize-columns></div>
+                        <div class="buttonsGrid">
+                            <button
+                                    type="button"
+                                    class="text-success glyphicon glyphicon-plus"
+                                    ng-click="psCtrl.addRow()"></button>
+                            <button
+                                    class="text-danger glyphicon glyphicon-remove padding0"
+                                    ng-click="psCtrl.delItem()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="button" ng-click="psCtrl.clearForm()" class="btn btn-info">Nuevo</button>
+                <button type="button" ng-click="psCtrl.submitPurchase()" class="btn btn-success">Guardar</button>
+                <button type="button" ng-click="psCtrl.deleteProvider()" class="btn btn-danger">Eliminar</button>
+            </div>
+        </form>
+    </div>
+</div>
