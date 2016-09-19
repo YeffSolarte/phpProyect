@@ -18,39 +18,39 @@ $method = $_SERVER['REQUEST_METHOD'];
 $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
 
 switch ($method) {        
-    case 'PUT':
-        $actionget = isset($_GET['id_fac']) ? true : null;
-        if($actionget){
-            header('Content-Type: application/json');
-            $data = json_decode(utf8_encode(file_get_contents("php://input")), true);
-            print_r(json_encode(modificar($fluent, $data)));
-        }        
-        break;
+//    case 'PUT':
+//        $actionget = isset($_GET['id_fac']) ? true : null;
+//        if($actionget){
+//            header('Content-Type: application/json');
+//            $data = json_decode(utf8_encode(file_get_contents("php://input")), true);
+//            print_r(json_encode(modificar($fluent, $data)));
+//        }        
+//        break;
     case 'POST':       
         header('Content-Type: application/json');
         $data = json_decode(utf8_encode(file_get_contents("php://input")), true);
         print_r(json_encode(registrar($fluent, $data)));
         break;
-    case 'GET': 
-        header('Content-Type: application/json');
-        $actionget = isset($_GET['id_fac']) ? true : null;
-        if($actionget){
-            print_r(json_encode(obtener($fluent, $_GET['id_fac']))); 
-        }
-        else {
-            print_r(json_encode(listar($fluent)));
-        }
-        break;   
-    case 'DELETE':
-        $actionget = isset($_GET['id_fac']) ? true : null;
-        if($actionget){
-            header('Content-Type: application/json');
-            print_r(json_encode(eliminar($fluent,$_GET['id_fac'])));
-        }        
-        break;
-    default:
-        echo "asdasd"; 
-        break;
+//    case 'GET': 
+//        header('Content-Type: application/json');
+//        $actionget = isset($_GET['id_fac']) ? true : null;
+//        if($actionget){
+//            print_r(json_encode(obtener($fluent, $_GET['id_fac']))); 
+//        }
+//        else {
+//            print_r(json_encode(listar($fluent)));
+//        }
+//        break;   
+//    case 'DELETE':
+//        $actionget = isset($_GET['id_fac']) ? true : null;
+//        if($actionget){
+//            header('Content-Type: application/json');
+//            print_r(json_encode(eliminar($fluent,$_GET['id_fac'])));
+//        }        
+//        break;
+//    default:
+//        echo "asdasd"; 
+//        break;
 }
 
 
@@ -79,19 +79,45 @@ function eliminar($fluent, $id)
 
 function registrar($fluent, $data)
 {
-    $fluent->insertInto('factura', $data)
-             ->execute();
-
-    var factSave = $fluent->from('factura')
-        ->where('consecutivo',$data['consecutivo'])
-            ->fetch();      
-    for(var x = 0; x < count($data.documentDetailList); x++){
-        $data.documentDetailList[x].id_fac = factSave.id_fac;
-        $fluent->insertInto('detalle_factura', $data.documentDetailList[x])
-             ->execute();
-    }         
+    $values = array('consecutivo' => $data["consecutivo"],
+        'fec_fac' => $data["fec_fac"], 
+        'id_cli' => $data["id_cli"], 
+        'id_emp' => $data["id_emp"], 
+//        'id_fac' => $data["id_fac"], 
+        'id_pro' => $data["id_pro"], 
+        'id_tip' => $data["id_tip"], 
+        'tot_des' => $data["tot_des"], 
+        'tot_fac' => $data["tot_fac"]); 
+    try {
+        $fluent->insertInto('factura')->values($values)->execute();
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
     
-    return factSave.id_fac;
+    $factura = $fluent->from('factura')
+        ->where('consecutivo', $data['consecutivo'])
+            ->fetch();  
+
+    
+    foreach ($data.documentDetailList as $val){
+        $val->id_fac = $factura->id_fac;
+        try{
+            $fluent->insertInto('detalle_factura', $val)
+                 ->execute();
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
+    } 
+    
+    
+        
+//    foreach ($data.documentDetailList as $val){
+//        $val->id_fac = $factSave->id_fac;
+//        $fluent->insertInto('detalle_factura', $val)
+//             ->execute();
+//    }         
+    
+    return $factura;
 }
 
 function modificar($fluent, $data)
@@ -102,7 +128,7 @@ function modificar($fluent, $data)
     
     return $fluent->from('articulos')
                   ->where('id_fac',$data['id_fac'])
-                              ->fetch();;
+                              ->fetch();
 }
 
 ?>

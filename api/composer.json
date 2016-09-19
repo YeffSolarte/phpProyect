@@ -1,5 +1,6 @@
 {
     "require": {
-        "lichtner/fluentpdo": "^1.0"
+        "lichtner/fluentpdo": "^1.0",
+        "lcobucci/jwt" : "^3.2.0"
     }
 }

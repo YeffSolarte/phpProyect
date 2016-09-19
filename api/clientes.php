@@ -85,7 +85,7 @@ function registrar($fluent, $data)
     
     return $fluent->from('clientes')
         ->where('doc_cli',$data['doc_cli'])
-            ->fetch();;
+            ->fetch();
 }
 
 function modificar($fluent, $data)

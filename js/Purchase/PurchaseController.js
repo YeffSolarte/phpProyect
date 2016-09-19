@@ -8,7 +8,6 @@
     function PurchaseController($scope,purchaseFactory,employeesFactory,providersFactory, itemsFactory){
         var vm = this;
         vm.newPurchase = {
-            tip_doc : 'CC',
             id_tip : 1,
             fec_fac : new Date(),
             tot_des: 0,
@@ -44,7 +43,7 @@
         $scope.gridOptions.columnDefs = [
             {
                 field: 'cod_art',
-                displayName: 'Código',
+                displayName: 'CÃ³digo',
                 width : '15%'
             },
             {
@@ -88,6 +87,35 @@
             });
         }
 
+
+        function submitPurchase(){
+            if(vm.purchaseForm.$invalid) return;
+            vm.newPurchase.id_cli = null;
+//            vm.newPurchase.id_fac = parseInt(vm.newPurchase.id_fac);
+//            vm.newPurchase.id_emp = parseInt(vm.newPurchase.id_emp);
+//            vm.newPurchase.id_pro = parseInt(vm.newPurchase.id_pro);
+//            vm.newPurchase.tot_des = parseFloat(vm.newPurchase.tot_des);
+//            vm.newPurchase.tot_fac = parseFloat(vm.newPurchase.tot_fac);
+            vm.newPurchase.documentDetailList = $scope.gridOptions.data;
+            if(vm.newPurchase.id_fac){
+                console.log("put");
+                // purchaseFactory.putPurchase(vm.newPurchase).then(function success(response){
+                //     console.log(response);
+                //     clearForm();
+                //     activate();
+                // });
+            }else{
+                console.log("post");
+                console.log(angular.toJson(vm.newPurchase, true));
+                purchaseFactory.postPurchase(vm.newPurchase).then(function success(response){
+                    console.log(response);
+//                    clearForm();
+//                    activate();
+                });
+            }
+        }
+
+
         function addRow(){
             if(!vm.newPurchase.item.id_art && vm.newPurchase.item.quantity === 0) return;
             $scope.gridApi.grid.cellNav.clearFocus();
@@ -121,7 +149,7 @@
             if(!$scope.gridOptions.data.some(function (val){return val === rowCol.row.entity;}))return;
             indexSelected = $scope.gridOptions.data.indexOf(rowCol.row.entity);
             if(indexSelected !== null && indexSelected !== undefined){
-                if(confirm("¿Desea eliminar éste Item?")){
+                if(confirm("Â¿Desea eliminar ste Item?")){
                     $scope.gridOptions.data.splice(indexSelected,1);
                     totalingPurchaseOrders();
                 }
@@ -148,29 +176,11 @@
             if(result.length) vm.newPurchase = result[0]
         }
 
-        function submitPurchase(){
-            if(vm.purchaseForm.$invalid) return;
-            vm.newPurchase.documentDetailList = $scope.gridOptions.data;
-            if(vm.newPurchase.id_fac){
-                console.log("put");
-                purchaseFactory.putPurchase(vm.newPurchase).then(function success(response){
-                    console.log(response);
-                    clearForm();
-                    activate();
-                });
-            }else{
-                console.log("post");
-                purchaseFactory.postPurchase(vm.newPurchase).then(function success(response){
-                    console.log(response);
-                    clearForm();
-                    activate();
-                });
-            }
-        }
+
 
         /*function deleteProvider(){
             if(!vm.newPurchase.id_fac) return;
-            if(confirm('¿Eliminar este Proveedor?')){
+            if(confirm('ï¿½Eliminar este Proveedor?')){
                 purchaseFactory.deletePurchase(vm.newPurchase.id_fac).then(function(response){
                     console.log(response);
                     clearForm();

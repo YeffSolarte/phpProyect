@@ -1,4 +1,4 @@
-# FluentPDO [![Build Status](https://secure.travis-ci.org/lichtner/fluentpdo.png?branch=master)](http://travis-ci.org/lichtner/fluentpdo)
+# FluentPDO [![Build Status](https://secure.travis-ci.org/fpdo/fluentpdo.png?branch=master)](http://travis-ci.org/fpdo/fluentpdo) [![Code Climate](https://codeclimate.com/github/fpdo/fluentpdo/badges/gpa.svg)](https://codeclimate.com/github/fpdo/fluentpdo)
 
 FluentPDO - smart SQL builder for PHP.
 
@@ -12,7 +12,11 @@ FluentPDO is small PHP library for rapid query building. Killer feature is "Smar
 - Build SELECT, INSERT, UPDATE & DELETE queries
 - Small and fast
 - Type hinting with code completion in smart IDEs
-- Requires PHP 5.1+ with any database supported by PDO
+- Requires PHP 5.3+ with any database supported by PDO
+
+## Reference
+
+[Sitepoint - Getting Started with FluentPDO](http://www.sitepoint.com/getting-started-fluentpdo/)
 
 ## Install
 
@@ -24,7 +28,7 @@ Add in your `composer.json`:
 
 	"require": {
 		...
-		"lichtner/fluentpdo": "dev-master"	
+		"fpdo/fluentpdo": "dev-master"
 	}
 
 then update your dependencies with `composer update`.
@@ -111,35 +115,31 @@ $query = $fpdo->from('user', 1);
 
 ```php
 $values = array('title' => 'article 1', 'content' => 'content 1');
-$query = $fpdo->insertInto('article')->values($values);
+$query = $fpdo->insertInto('article')->values($values)->execute();
 // or shortly
-$query = $fpdo->insertInto('article', $values);
+$query = $fpdo->insertInto('article', $values)->execute();
 ```
 
 ##### UPDATE
 
 ```php
 $set = array('published_at' => new FluentLiteral('NOW()'));
-$query = $fpdo->update('article')->set($set)->where('id', 1);
+$query = $fpdo->update('article')->set($set)->where('id', 1)->execute();
 // or shortly if you update one row by primary key
-$query = $fpdo->update('article', $set, 1);
+$query = $fpdo->update('article', $set, 1)->execute();
 ```
 
 ##### DELETE
 
 ```php
-$query = $fpdo->deleteFrom('article')->where('id', 1);
+$query = $fpdo->deleteFrom('article')->where('id', 1)->execute();
 // or shortly if you delete one row by primary key
-$query = $fpdo->deleteFrom('article', 1);
+$query = $fpdo->deleteFrom('article', 1)->execute();
 ```
 
 *Note: INSERT, UPDATE and DELETE will be executed after `->execute()`:*
 
-```php
-$fpdo->deleteFrom('article', 1)->execute();
-```
-
-Full documentation can be found on the [FluentPDO homepage](http://fluentpdo.com)
+Full documentation can be found on the [FluentPDO homepage](http://fpdo.github.io/fluentpdo/)
 
 ## Licence
 
