@@ -57,7 +57,7 @@
 
         function deleteEmployee(){
             if(!vm.newEmployee.id_emp) return;
-            if(confirm('¿Eliminar este Empleado?')){
+            if(confirm('Â¿Eliminar este Empleado?')){
                 employeesFactory.deleteEmployee(vm.newEmployee.id_emp).then(function(response){
                     console.log(response);
                     clearForm();

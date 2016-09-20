@@ -64,7 +64,7 @@ function modificar($fluent, $data)
     
     return $fluent->from('consecutivos')
                   ->where('id_tip',$data['id_tip'])
-                              ->fetch();;
+                              ->fetch();
 }
 
 ?>

@@ -7,7 +7,9 @@
 
     function ItemsController($scope,itemsFactory){
         var vm = this;
-        vm.newItem = {};
+        vm.newItem = {
+            exi_art : 0
+        };
         vm.items = [];
         vm.selectItem = selectItem;
         vm.submitItem = submitItem;
@@ -55,7 +57,7 @@
 
         function deleteItem(){
             if(!vm.newItem.id_art) return;
-            if(confirm('¿Eliminar este Item?')){
+            if(confirm('Â¿Eliminar este Item?')){
                 itemsFactory.deleteItem(vm.newItem.id_art).then(function(response){
                     console.log(response);
                     clearForm();
@@ -65,7 +67,9 @@
         }
 
         function clearForm(){
-            vm.newItem = {};
+            vm.newItem = {
+                exi_art : 0
+            };
         }
     }
 })();

@@ -89,13 +89,9 @@
 
 
         function submitPurchase(){
-            if(vm.purchaseForm.$invalid) return;
+            if (vm.purchaseForm.$invalid) return;
+            if (!$scope.gridOptions.data.length) return alert('¿Qué compraste?.');
             vm.newPurchase.id_cli = null;
-//            vm.newPurchase.id_fac = parseInt(vm.newPurchase.id_fac);
-//            vm.newPurchase.id_emp = parseInt(vm.newPurchase.id_emp);
-//            vm.newPurchase.id_pro = parseInt(vm.newPurchase.id_pro);
-//            vm.newPurchase.tot_des = parseFloat(vm.newPurchase.tot_des);
-//            vm.newPurchase.tot_fac = parseFloat(vm.newPurchase.tot_fac);
             vm.newPurchase.documentDetailList = $scope.gridOptions.data;
             if(vm.newPurchase.id_fac){
                 console.log("put");
@@ -109,27 +105,39 @@
                 console.log(angular.toJson(vm.newPurchase, true));
                 purchaseFactory.postPurchase(vm.newPurchase).then(function success(response){
                     console.log(response);
-//                    clearForm();
-//                    activate();
+                    vm.newPurchase.id_fac = response.id_fac;
                 });
             }
         }
 
 
         function addRow(){
-            if(!vm.newPurchase.item.id_art && vm.newPurchase.item.quantity === 0) return;
+            if (!vm.newPurchase.item.id_art && vm.newPurchase.item.quantity === 0) return;
             $scope.gridApi.grid.cellNav.clearFocus();
-            var x = $scope.gridOptions.data.length,
-                val = $scope.gridOptions.data[x - 1];
-            if (x > 0) {
-                if (!val.id_art){
-                    $scope.gridApi.cellNav.scrollToFocus($scope.gridOptions.data[$scope.gridOptions.data.length-1],$scope.gridOptions.columnDefs[0]);
-                }
-                else
+            var result = $scope.gridOptions.data.filter(function (val) {
+                return val.id_art === vm.newPurchase.item.id_art;
+            });
+            if (result.length) {
+                var indexOf = $scope.gridOptions.data.indexOf(result[0]);
+                $scope.gridOptions.data[indexOf].quantity += vm.newPurchase.quantity;
+                $scope.gridOptions.data[indexOf].value = (parseInt($scope.gridOptions.data[indexOf].pre_ven)) * $scope.gridOptions.data[indexOf].quantity;
+                vm.newPurchase.item = '';
+                vm.newPurchase.quantity = 0;
+                totalingPurchaseOrders();
+            }else {
+                var x = $scope.gridOptions.data.length,
+                    val = $scope.gridOptions.data[x - 1];
+                if (x > 0) {
+                    if (!val.id_art){
+                        $scope.gridApi.cellNav.scrollToFocus($scope.gridOptions.data[$scope.gridOptions.data.length-1],$scope.gridOptions.columnDefs[0]);
+                    }
+                    else
+                        okAddRow();
+                }else{
                     okAddRow();
-            }else{
-                okAddRow();
+                }
             }
+
         }
 
         function okAddRow (){

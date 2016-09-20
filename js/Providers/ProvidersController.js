@@ -57,7 +57,7 @@
 
         function deleteProvider(){
             if(!vm.newProvider.id_pro) return;
-            if(confirm('¿Eliminar este Proveedor?')){
+            if(confirm('Â¿Eliminar este Proveedor?')){
                 providersFactory.deleteProvider(vm.newProvider.id_pro).then(function(response){
                     console.log(response);
                     clearForm();

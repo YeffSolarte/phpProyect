@@ -57,7 +57,7 @@
 
         function deleteClient(){
             if(!vm.newClient.id_cli) return;
-            if(confirm('¿Eliminar este Cliente?')){
+            if(confirm('Â¿Eliminar este Cliente?')){
                 clientsFactory.deleteClient(vm.newClient.id_cli).then(function(response){
                     console.log(response);
                     clearForm();

@@ -99,23 +99,32 @@ function registrar($fluent, $data)
             ->fetch();  
 
     
-    foreach ($data.documentDetailList as $val){
-        $val->id_fac = $factura->id_fac;
+    foreach ($data["documentDetailList"] as $val){
+        $value = array(
+            'cantidad' => $val["quantity"],
+//            'id_det_fac' => $data["id_det_fac"], 
+            'id_fac' => $factura->id_fac,
+            'id_art' => $val["id_art"]
+        ); 
         try{
-            $fluent->insertInto('detalle_factura', $val)
+            $fluent->insertInto('detalle_factura', $value)
                  ->execute();
         } catch (Exception $e) {
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            return $fluent->deleteFrom('factura')
+                ->where('id_fac', $factura->id_fac)
+                     ->execute();
+            
         }
     } 
     
+    $set = array('consecutivo' => ($data["consecutivo"] + 1), 'fec_act' => $data["fec_fac"]);
     
-        
-//    foreach ($data.documentDetailList as $val){
-//        $val->id_fac = $factSave->id_fac;
-//        $fluent->insertInto('detalle_factura', $val)
-//             ->execute();
-//    }         
+    try{
+        $fluent->update('consecutivos')->set($set)->where('id_tip', $data["id_tip"]);
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }  
     
     return $factura;
 }
