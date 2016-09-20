@@ -5,11 +5,11 @@
 
     require './vendor/autoload.php';  
 	require '/detalle_factura.php';
+	require '/consecutivo.php';
 
     class Compra {
         var $id_fac;
         var $fec_fac;
-        var $id_fac;
         var $id_emp;
         var $id_pro;
         var $id_tip;
@@ -18,6 +18,7 @@
         var $table_name;
         var $fluent;
 		var $detalle;
+		var $consecutivo;
         
         function Compra() {
             $this->table_name = "factura";
@@ -26,6 +27,7 @@
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $this->fluent = new FluentPDO($pdo);
 			$this->detalle = new DetalleFactura();
+			$this->consecutivo = new Consecutivo();
         }
         
         function impor_data($data) {
@@ -66,7 +68,7 @@
 				'id_tip' => $data["id_tip"], 
 				'tot_des' => $data["tot_des"], 
 				'tot_fac' => $data["tot_fac"],
-				'documentDetailList' => $this->detalle->obtener($data["id_fac"], true);
+				'documentDetailList' => $this->detalle->obtener($data["id_fac"], true)
             ];   
         }
         
@@ -127,32 +129,12 @@
 
 
 			foreach ($data["documentDetailList"] as $val){
-				$value = array(
-					'cantidad' => $val["quantity"],
-		//            'id_det_fac' => $data["id_det_fac"], 
-					'id_fac' => $factura->id_fac,
-					'id_art' => $val["id_art"]
-				); 
-				try{
-					$fluent->insertInto('detalle_factura', $value)
-						 ->execute();
-				} catch (Exception $e) {
-					echo 'Excepción capturada: ',  $e->getMessage(), "\n";
-					return $fluent->deleteFrom('factura')
-						->where('id_fac', $factura->id_fac)
-							 ->execute();
-
-				}
+				$this->detalle->registrar($val);
 			} 
-
+			
 			$set = array('consecutivo' => ($data["consecutivo"] + 1), 'fec_act' => $data["fec_fac"]);
-
-			try{
-				$fluent->update('consecutivos')->set($set)->where('id_tip', $data["id_tip"]);
-			} catch (Exception $e) {
-				return $e->getMessage();
-			}  
-
+			$this->consecutivo->modificar($set);
+			
 			return $factura;
         }
 

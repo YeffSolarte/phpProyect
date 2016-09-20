@@ -92,6 +92,7 @@
             if (vm.purchaseForm.$invalid) return;
             if (!$scope.gridOptions.data.length) return alert('¿Qué compraste?.');
             vm.newPurchase.id_cli = null;
+            vm.newPurchase.consecutivo = parseInt(vm.newPurchase.consecutivo);
             vm.newPurchase.documentDetailList = $scope.gridOptions.data;
             if(vm.newPurchase.id_fac){
                 console.log("put");
@@ -188,7 +189,7 @@
 
         /*function deleteProvider(){
             if(!vm.newPurchase.id_fac) return;
-            if(confirm('�Eliminar este Proveedor?')){
+            if(confirm('¿Eliminar este Proveedor?')){
                 purchaseFactory.deletePurchase(vm.newPurchase.id_fac).then(function(response){
                     console.log(response);
                     clearForm();
