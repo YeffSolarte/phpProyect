@@ -22,6 +22,7 @@
         vm.addRow = addRow;
         vm.delItem = delItem;
         vm.totalingPurchaseOrders = totalingPurchaseOrders;
+        vm.getPurchaseByConsecutive = getPurchaseByConsecutive;
         //vm.getProviderByDocNum = getProviderByDocNum;
         //vm.deleteProvider = deleteProvider;
 
@@ -84,6 +85,14 @@
                     });
                 });
                 //vm.providers = response;
+            });
+        }
+
+        function getPurchaseByConsecutive() {
+            if (!vm.newPurchase.consecutivo || vm.newPurchase.id_fac) return;
+            vm.newPurchase.consecutivo = vm.newPurchase.consecutivo.trim();
+            purchaseFactory.getPurchaseByConsecutive(vm.newPurchase.consecutivo).then(function(response){
+                console.log(response);
             });
         }
 

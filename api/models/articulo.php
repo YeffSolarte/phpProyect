@@ -70,14 +70,20 @@
             }
             
         }
-        function obtener($id_art)
+        function obtener($id_art, $decode)
         {
             try{
                 $result = $this->fluent->from($this->table_name)
                               ->where('id_art',$id_art)
                                           ->fetch();
+				$result = (array) $result;
                 $result = $this->export_data($result);
-                return json_encode($result);
+				if ($decode) {
+					return $result;
+				} else {
+					return json_encode($result);
+				}
+                
             } catch (Exception $e) {
                 return json_encode($e->getMessage());
 

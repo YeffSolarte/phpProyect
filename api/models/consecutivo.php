@@ -21,10 +21,14 @@
         function impor_data($data) {
 			
             $result = array(
-				'id_tip' => $data["id_tip"],
                 'consecutivo' => $data["consecutivo"],
                 'fec_act' => $data["fec_act"]
 			);  
+			if(array_key_exists('id_tip', $data)) {
+				if($data["id_tip"]){
+					$result["id_tip"] = $data["id_tip"];
+				}				
+			}
             return $result;
         }
         

@@ -71,20 +71,8 @@
 				'documentDetailList' => $this->detalle->obtener($data["id_fac"], true)
             ];   
         }
-        
-
-        function listar()
-        {
-            try{
-                $result = $this->fluent->from($this->table_name)->fetchAll();      
-                return json_encode($result);
-            } catch (Exception $e) {
-                return json_encode($e->getMessage());
-
-            }
-            
-        }
-        function obtener($id_fac)
+       
+        function obtener_por_id($id_fac)
         {
             try{
                 $result = $this->fluent->from($this->table_name)
@@ -98,6 +86,20 @@
             }
             
         }
+		
+		function obtener_por_consecutivo ($consecutivo){
+			try{
+                $result = $this->fluent->from($this->table_name)
+                              ->where('consecutivo', $consecutivo)
+                                          ->fetch();
+				$result = (array) $result;
+                $result = $this->export_data($result);
+                return json_encode($result);
+            } catch (Exception $e) {
+                return json_encode($e->getMessage());
+
+            }
+		}
 
         function eliminar($id)
         {
@@ -116,26 +118,32 @@
 
         function registrar($data)
         {
+			$documentDetailList = $data["documentDetailList"];	
             $data = $this->impor_data($data);
 			try {
-				$fluent->insertInto('factura')->values($data)->execute();
+				$this->fluent->insertInto('factura')->values($data)->execute();
 			} catch (Exception $e) {
 				return $e->getMessage();
 			}
 
-			$factura = $fluent->from('factura')
+			$factura = $this->fluent->from('factura')
 				->where('consecutivo', $data['consecutivo'])
 					->fetch();  
 
 
-			foreach ($data["documentDetailList"] as $val){
+			foreach ($documentDetailList as $val){
+				$val["id_fac"] = $factura->id_fac;
+				$val["cantidad"] = $val["quantity"];
 				$this->detalle->registrar($val);
 			} 
 			
-			$set = array('consecutivo' => ($data["consecutivo"] + 1), 'fec_act' => $data["fec_fac"]);
+			$set = array(
+				'consecutivo' => $data["consecutivo"],
+				'fec_act' => $data["fec_fac"],
+				'id_tip' => $data["id_tip"]);
 			$this->consecutivo->modificar($set);
 			
-			return $factura;
+			return json_encode($factura);
         }
 
         function modificar($data)

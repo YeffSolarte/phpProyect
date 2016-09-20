@@ -1,5 +1,6 @@
 <?php
-    require './vendor/autoload.php';  
+    require './vendor/autoload.php';
+	require '/articulo.php';
 
     class DetalleFactura {
         var $id_det_fac;
@@ -9,6 +10,7 @@
         
         var $table_name;
         var $fluent;
+		var $articulo;
         
         function DetalleFactura() {
             $this->table_name = "detalle_factura";
@@ -16,6 +18,7 @@
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $this->fluent = new FluentPDO($pdo);
+            $this->articulo = new Articulo();
         }
         
         function impor_data($data) {
@@ -34,11 +37,12 @@
         }
         
         function export_data($data) {
+//			return false;
             return (object) [
                 'id_det_fac' => $data["id_det_fac"],
                 'id_fac' => $data["id_fac"],
                 'id_art' => $data["id_art"],
-                'cantidad' => $data["cantidad"]
+				'articulo' => $this->articulo->obtener($data["id_art"], true)
             ];   
         }
         
@@ -47,18 +51,23 @@
             try{
                 $result = $this->fluent->from($this->table_name)
                               ->where('id_fac',$id_fac)
-                                          ->fetch();
-                $result = $this->export_data($result);
-				if ($decode){
-					return $result;					
-				} else {
-					return json_encode($result);
-				}
-                
+                                          ->fetchAll();
+//				$result = (array) $result;
+				$result2 = (array)[];
+				foreach ($result as $val){
+					$val = (array) $val;
+					array_push($result2, $this->export_data($val)); 
+				}  				
+//                
             } catch (Exception $e) {
                 return json_encode($e->getMessage());
 
             }
+			if ($decode){
+				return $result2;					
+			} else {
+				return json_encode($result2);
+			}
             
         }
 

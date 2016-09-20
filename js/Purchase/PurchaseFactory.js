@@ -7,16 +7,16 @@
 
     function purchaseFactory($q,baseFactory,$http){
         return {
-            getAllProviders : getAllProviders,
+            getPurchaseByConsecutive : getPurchaseByConsecutive,
             getConsecutive : getConsecutive,
             postPurchase : postPurchase,
             putPurchase : putPurchase,
             deletePurchase: deletePurchase
         };
 
-        function getAllProviders(){
+        function getPurchaseByConsecutive(consecutive){
             return $q(function (resolve, reject) {
-                var url = 'proveedores.php';
+                var url = 'compras.php?consecutivo=' + consecutive;
                 baseFactory(url).get().then(function (response) {
                     resolve(response.data);
                 }, function (reason) {
