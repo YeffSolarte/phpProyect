@@ -94,6 +94,12 @@
                 console.log(response);
                 response.fec_fac = $filter('date')(response.fec_fac, 'dd-MM-yyyy');
                 // response.documentDetailList = response.documentDetail;
+	            var result = [];
+	            response.documentDetailList.forEach(function (val, $intex) {
+		            val.articulo.quantity = val.cantidad;
+		            result.push(val.articulo);
+	            });
+	            response.documentDetailList = result;
                 vm.newPurchase = response;
 	            $scope.gridOptions.data = vm.newPurchase.documentDetailList;
             });

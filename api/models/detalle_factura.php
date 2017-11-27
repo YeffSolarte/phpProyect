@@ -42,6 +42,7 @@
                 'id_det_fac' => $data["id_det_fac"],
                 'id_fac' => $data["id_fac"],
                 'id_art' => $data["id_art"],
+                'cantidad' => $data["cantidad"],
 				'articulo' => $this->articulo->obtener($data["id_art"], true)
             ];   
         }
