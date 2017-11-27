@@ -18,5 +18,5 @@
         'ui.grid.exporter',
         'purchase'
     ])
-        .constant('ngAuthSettings',{apiServiceBaseUri: 'http://localhost:8080/phpProyect/api/'});
+        .constant('ngAuthSettings',{apiServiceBaseUri: 'http://localhost/phpProyect/api/'});
 })();

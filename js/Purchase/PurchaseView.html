@@ -23,6 +23,7 @@
                         <select
                                 class="form-control"
                                 id="id_emp"
+                                ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                 ng-model="psCtrl.newPurchase.id_emp"
                                 ng-options="emp.id_emp as emp.nom_emp for emp in psCtrl.employees"
                                 required>
@@ -31,7 +32,7 @@
                     <div class="form-group">
                         <label for="date">Fecha Factura</label>
                         <input
-                                type="date"
+                                type="text"
                                 id="date"
                                 class="form-control"
                                 ng-model="psCtrl.newPurchase.fec_fac"
@@ -42,6 +43,7 @@
                         <select
                                 class="form-control"
                                 id="id_pro"
+                                ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                 ng-model="psCtrl.newPurchase.id_pro"
                                 ng-options="pro.id_pro as pro.nom_pro for pro in psCtrl.providers"
                                 required>
@@ -50,8 +52,9 @@
                     <div class="form-group">
                         <label for="tot_des">Descuento</label>
                         <input
-                                type="number"
+                                type="text"
                                 id="tot_des"
+                                ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                 class="form-control"
                                 ng-model="psCtrl.newPurchase.tot_des"
                                 ng-blur=""
@@ -74,6 +77,7 @@
                                 <label for="items">Articulo</label>
                                 <select
                                         id="items"
+                                        ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                         class="form-control"
                                         ng-options="art as art.nom_art for art in psCtrl.items"
                                         ng-model="psCtrl.newPurchase.item">
@@ -85,7 +89,9 @@
                                 <label for="quantity">Cantidad</label>
                                 <input
                                         type="number"
+                                        ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                         id="quantity"
+                                        min="1"
                                         class="form-control"
                                         ng-model="psCtrl.newPurchase.quantity">
                             </div>
@@ -96,9 +102,12 @@
                         <div class="buttonsGrid">
                             <button
                                     type="button"
+                                    ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                     class="text-success glyphicon glyphicon-plus"
                                     ng-click="psCtrl.addRow()"></button>
                             <button
+                                    type="button"
+                                    ng-disabled="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac"
                                     class="text-danger glyphicon glyphicon-remove padding0"
                                     ng-click="psCtrl.delItem()"></button>
                         </div>
@@ -107,7 +116,8 @@
             </div>
             <div class="text-center">
                 <button type="button" ng-click="psCtrl.clearForm()" class="btn btn-info">Nuevo</button>
-                <button type="button" ng-click="psCtrl.submitPurchase()" class="btn btn-success">Guardar</button>
+                <button type="button" ng-if="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac" ng-click="psCtrl.editPurchase = true" class="btn btn-info">Editar</button>
+                <button type="button" ng-hide="!psCtrl.editPurchase && psCtrl.newPurchase.id_fac" ng-click="psCtrl.submitPurchase()" class="btn btn-success">Guardar</button>
                 <button type="button" ng-click="psCtrl.deleteProvider()" class="btn btn-danger">Eliminar</button>
             </div>
         </form>

@@ -3,28 +3,28 @@
     angular.module('purchase')
         .controller('PurchaseController',PurchaseController);
 
-    PurchaseController.$inject = ['$scope','purchaseFactory','employeesFactory','providersFactory', 'itemsFactory'];
+    PurchaseController.$inject = ['$scope','purchaseFactory','employeesFactory','providersFactory', 'itemsFactory', '$filter'];
 
-    function PurchaseController($scope,purchaseFactory,employeesFactory,providersFactory, itemsFactory){
+    function PurchaseController($scope,purchaseFactory,employeesFactory,providersFactory, itemsFactory, $filter){
         var vm = this;
         vm.newPurchase = {
             id_tip : 1,
-            fec_fac : new Date(),
+            fec_fac : $filter('date')(new Date(), 'dd-MM-yyyy'),
             tot_des: 0,
+            quantity : 1,
             tot_fac : 0,
             documentDetailList : []
         };
         vm.providers = [];
         vm.employees = [];
         vm.items = [];
+        vm.editPurchase = false;
         vm.submitPurchase= submitPurchase;
         vm.clearForm = clearForm;
         vm.addRow = addRow;
         vm.delItem = delItem;
         vm.totalingPurchaseOrders = totalingPurchaseOrders;
         vm.getPurchaseByConsecutive = getPurchaseByConsecutive;
-        //vm.getProviderByDocNum = getProviderByDocNum;
-        //vm.deleteProvider = deleteProvider;
 
         $scope.gridOptions = {
             data : vm.newPurchase.documentDetailList,
@@ -84,15 +84,18 @@
 
                     });
                 });
-                //vm.providers = response;
             });
         }
 
         function getPurchaseByConsecutive() {
             if (!vm.newPurchase.consecutivo || vm.newPurchase.id_fac) return;
-            vm.newPurchase.consecutivo = vm.newPurchase.consecutivo.trim();
+            // vm.newPurchase.consecutivo = vm.newPurchase.consecutivo.trim();
             purchaseFactory.getPurchaseByConsecutive(vm.newPurchase.consecutivo).then(function(response){
                 console.log(response);
+                response.fec_fac = $filter('date')(response.fec_fac, 'dd-MM-yyyy');
+                // response.documentDetailList = response.documentDetail;
+                vm.newPurchase = response;
+	            $scope.gridOptions.data = vm.newPurchase.documentDetailList;
             });
         }
 
@@ -105,11 +108,11 @@
             vm.newPurchase.documentDetailList = $scope.gridOptions.data;
             if(vm.newPurchase.id_fac){
                 console.log("put");
-                // purchaseFactory.putPurchase(vm.newPurchase).then(function success(response){
-                //     console.log(response);
-                //     clearForm();
-                //     activate();
-                // });
+                purchaseFactory.putPurchase(vm.newPurchase).then(function success(response){
+                    console.log(response);
+                    clearForm();
+                    activate();
+                });
             }else{
                 console.log("post");
                 console.log(angular.toJson(vm.newPurchase, true));
@@ -122,7 +125,10 @@
 
 
         function addRow(){
-            if (!vm.newPurchase.item.id_art && vm.newPurchase.item.quantity === 0) return;
+            if (!vm.newPurchase.item.id_art || !vm.newPurchase.quantity) {
+	            vm.newPurchase.quantity = 1;
+            	return;
+            }
             $scope.gridApi.grid.cellNav.clearFocus();
             var result = $scope.gridOptions.data.filter(function (val) {
                 return val.id_art === vm.newPurchase.item.id_art;
@@ -156,7 +162,7 @@
             i.value = (parseInt(i.pre_ven)) * i.quantity;
             $scope.gridOptions.data.push(i);
             vm.newPurchase.item = '';
-            vm.newPurchase.quantity = 0;
+            vm.newPurchase.quantity = 1;
             totalingPurchaseOrders();
         }
 
@@ -187,35 +193,19 @@
             }
 
         }
-
-        function getProviderByDocNum(num){
-            if(!vm.newPurchase.doc_pro) return;
-            var result = vm.providers.filter(function(val){return val.doc_pro === num});
-            if(result.length) vm.newPurchase = result[0]
-        }
-
-
-
-        /*function deleteProvider(){
-            if(!vm.newPurchase.id_fac) return;
-            if(confirm('¿Eliminar este Proveedor?')){
-                purchaseFactory.deletePurchase(vm.newPurchase.id_fac).then(function(response){
-                    console.log(response);
-                    clearForm();
-                    activate();
-                });
-            }
-        }*/
-
+        
         function clearForm(){
             vm.newPurchase = {
                 tip_doc : 'CC',
                 id_tip : 1,
-                fec_fac : new Date(),
+	            fec_fac : $filter('date')(new Date(), 'dd-MM-yyyy'),
                 tot_des: 0,
+                quantity : 1,
                 tot_fac : 0,
                 documentDetailList : []
             };
+            $scope.gridOptions.data = vm.newPurchase.documentDetailList;
+            activate();
             totalingPurchaseOrders();
         }
     }
